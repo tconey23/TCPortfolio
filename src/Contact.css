@@ -1,0 +1,36 @@
+
+form{
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    height: 600px;
+
+    label{
+        color: orange;
+        font-size: 22px;
+    }
+
+    input{
+        width: 200px
+    }
+
+    button{
+        margin-top: 10px;
+        width: 100px;
+        height: 60px;
+        background-color: black;
+        color: orange;
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 30px;
+        padding: 5px
+    }
+
+    textArea{
+        width: 500px;
+        height: 800px
+    }
+}

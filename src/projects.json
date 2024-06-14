@@ -1,0 +1,22 @@
+[{
+        "featured": true,
+        "title": "Calming Corner",
+        "img": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjh4dmY5cmlsenR2OWJlazlqY24wdGV1ZTliMnU1dnM5NDlhZjUybyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sGQApEOfjaWqIA3J2A/giphy.gif",
+        "description": "Calming Corner is an application geared towards relaxation. Meant to be used for short periods of time, the goal is to provide the user with a momentary escape from the pressures of daily life. ",
+        "url": "https://mod3-showcase.vercel.app/"
+    },
+    {
+        "featured": true,
+        "title": "bLOOMbABY",
+        "img": "/assets/calmingCorner.png",
+        "description": "bLOOMbABY is a game loosely modelled after the digital pets of past decades. The user is given an assortment of seedlings to select from, and plant in their garden. Once planted the flower will grow into a beautiful, procedurally generated bloom.",
+        "url": "https://bloombaby-ohskqcjz2-toms-projects-be041e30.vercel.app/"
+    },
+    {
+        "featured": true,
+        "title": "Destination Banana",
+        "img": "/assets/calmingCorner.png",
+        "description": "Destination Banana takes the concept of the wikipedia rabbit hole and turns it into an interactive experience. Players will be given a random topic from Wikipedia and the accompanying article links. The player must then click through the links to ultimately reach the goal article (Banana)!",
+        "url": "https://destination-banana.vercel.app/"
+    }
+]
