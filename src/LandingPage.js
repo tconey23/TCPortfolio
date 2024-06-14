@@ -22,7 +22,6 @@ const CameraControl = ({cameraPosition}) => {
     const vect = new Vector3(x,y,z)
     camera.lookAt(vect)
     camera.position.set(x,y,z+5)
-
   })
 }
 
@@ -279,7 +278,7 @@ const styles={
   },
   link: {
     fontSize: '80px',
-    color: 'orange',
+    color: '#ff8800',
     position: 'absolute',
     top: '45vh',
     left: '45vw',
@@ -319,8 +318,8 @@ switch: {
   zIndex: '100'
 },
 text: {
-  color: 'orange',
+  color: '#ff8800',
   marginTop: '20px',
   marginLeft: '18px'
-}
+},
 }

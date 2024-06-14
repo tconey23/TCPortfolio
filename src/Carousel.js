@@ -87,7 +87,7 @@ const styles = {
     },
     icon: {
         fontSize: '80px',
-        color:  'orange',
+        color:  '#ff8800',
     },
     slider: {
         width: '75vw',
@@ -100,7 +100,7 @@ const styles = {
         alignItems: 'center',
         paddingTop: '10px',
         flexDirection: 'column',
-        color: 'orange',
+        color: '#ff8800',
         fontSize: '25px'
     },
     mocha: {

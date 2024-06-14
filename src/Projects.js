@@ -52,7 +52,7 @@ const mainStyle = {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'orange',
+    color: '#ff8800',
     fontSize: '30px',
     textDecoration: 'none'
 }

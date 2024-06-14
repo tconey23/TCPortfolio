@@ -17,11 +17,18 @@ const SideBar = (setIsOn) => {
       {location.pathname !== '/portfolio' && <Link onClick={() => handleClick()} style={styles.link}>PORTFOLIO</Link>}
       {location.pathname !== '/resume' && <Link onClick={() => handleClick()} style={styles.link}>RESUME</Link>}
       {location.pathname !== '/contact' && <Link onClick={() => handleClick()} style={styles.link} to={'/contact'}>CONTACT</Link>}
+      <div style={styles.logoCont}>
+        <img src='/TC192.png' style={styles.logo}/>
+      </div>    
     </div>
   )
 }
 
 export default SideBar
+
+
+
+
 
 const styles = {
     menu: {
@@ -39,5 +46,15 @@ const styles = {
         width: '100%',
         marginBottom: '20px',
         borderRadius: '20px'
-    }
+    },
+    logoCont: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      width: '192px',
+      height: '192px'
+    },
+    logo: { 
+      scale: '0.35'
+    },
 }

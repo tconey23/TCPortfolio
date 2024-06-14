@@ -82,7 +82,7 @@ export default Home
         paddingTop: '10px',
         height: '20px',
         width: '200px',
-        color: 'orange',
+        color: '#ff8800',
         fontSize: '30px',
         flexDirection: 'row',
         flexWrap: 'nowrap',
@@ -98,7 +98,7 @@ export default Home
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: '20px',
-        color: 'orange',
+        color: '#ff8800',
         fontSize: '30px'
     },
     navbar: {

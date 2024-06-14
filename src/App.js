@@ -30,8 +30,10 @@ function App() {
                 <SideBar setIsOn={setIsOn}/>
             </motion.div> 
         }
-        <div className="switch" style={styles.switch} data-isOn={isOn} onClick={toggleSwitch}>
-            <motion.div className="handle" style={getHandleStyle()} layout transition={button} />
+        <div style={styles.switchCont}>
+            <div className="switch" style={styles.switch} data-isOn={isOn} onClick={toggleSwitch}>
+                <motion.div className="handle" style={getHandleStyle()} layout transition={button} />
+            </div>
         </div>
         <nav id='navbar' style={styles.navbar}>
             <Link style={styles.link} to={'https://github.com/tconey23'} target='_blank'>        
@@ -44,6 +46,9 @@ function App() {
             <p>LINKED IN</p>
         </Link>
         </nav>
+        <div style={styles.logoCont}>
+            <img src='/TC192.png' style={styles.logo}/>
+        </div>
     </header>
       <main id='mainContent'>
         <Routes>
@@ -117,7 +122,7 @@ const styles = {
       paddingTop: '10px',
       height: '20px',
       width: '200px',
-      color: 'orange',
+      color: '#ff8800',
       fontSize: '30px',
       flexDirection: 'row',
       flexWrap: 'nowrap',
@@ -140,11 +145,31 @@ const styles = {
       flexWrap: 'nowrap',
       alignItems: 'center',
       justifyContent: 'center',
+      width: '33vw'
   },
   name:{
       fontSize: '50px'
+  },
+  logo: { 
+    scale: '0.35'
+  },
+  logoCont: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '33vw',
+    height: '18vh'
+  },
+  switchCont: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '33vw',
+    height: '18vh'
   }
 }
+
+
 
 const button = {
   type: "spring",
