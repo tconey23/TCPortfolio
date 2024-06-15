@@ -48,7 +48,7 @@ export default Home
         left: '8px'
     },
     sideBar: {
-        width: '15vw',
+        width: '40vw',
         height: '500px',
         position: 'absolute',
         borderRadius: '40px',
@@ -91,7 +91,7 @@ export default Home
         textDecoration: 'none'
     },
     projects: {
-        width: '100vw',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         flexWrap: 'nowrap',

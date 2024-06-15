@@ -95,7 +95,6 @@ body {
   overflow: hidden
 }
 
-
 h3{
   margin-bottom: 5px
 }
@@ -105,9 +104,18 @@ h2{
   margin-top: 1px
 }
 
-
   .dodecGeo {
     cursor: url('/public/assets/roll.ico'), auto
+  }
+
+  #titleName{
+    font-size: 1.5em;
+    text-wrap: nowrap;
+    margin-left: 10px
+  }
+
+  #socials{
+    text-wrap: nowrap;
   }
 
 

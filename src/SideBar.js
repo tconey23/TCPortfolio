@@ -26,10 +26,6 @@ const SideBar = (setIsOn) => {
 
 export default SideBar
 
-
-
-
-
 const styles = {
     menu: {
         padding: '20px',

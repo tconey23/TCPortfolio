@@ -42,7 +42,7 @@ const Projects = () => {
 export default Projects
 
 const mainStyle = {
-    width: '1300px',
+    width: '75vw',
     height: '55vh',
     border: '0.5px solid white',
     overflowY: 'scroll',
@@ -92,13 +92,14 @@ const styles = {
     width: '100%'
   },
   description: {
-    fontSize: '25px',
+    fontSize: '20px',
     width: '75%',
     marginLeft: '10px',
-    color: 'white'
+    color: 'white',
+    textAlign: 'left'
   },
   title :{
-    fontSize: '50px',
+    fontSize: '40px',
     margin: '10px',
     width: '25%'
   }

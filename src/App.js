@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import Contact from './Contact';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
@@ -38,13 +38,13 @@ function App() {
         <nav id='navbar' style={styles.navbar}>
             <Link style={styles.link} to={'https://github.com/tconey23'} target='_blank'>        
                 <i style={styles.icon} className="fab fa-github"></i>
-                <p>GITHUB</p>
+                <p id='socials'>GITHUB</p>
             </Link>
-                <p style={styles.name}>TOM CONEY</p>
+                <p id='titleName' >TOM CONEY</p>
             <Link style={styles.link} to={'https://www.linkedin.com/in/tom-ce-coney/'} target='_blank'>        
                 <i style={styles.icon} className="fab fa-linkedin"></i>
-            <p>LINKED IN</p>
-        </Link>
+                <p id='socials' >LINKED IN</p> 
+            </Link>
         </nav>
         <div style={styles.logoCont}>
             <img src='/TC192.png' style={styles.logo}/>
@@ -128,7 +128,8 @@ const styles = {
       flexWrap: 'nowrap',
       alignItems: 'center',
       justifyContent: 'center',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      wordWrap: 'nowrap'
   },
   projects: {
       width: '100vw',

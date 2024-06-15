@@ -145,9 +145,8 @@ const LandingPage = () => {
   return (
     <div id='landingSplash' style={styles.splash}>
      <div>
-     <div className="switch" 
-     style={{
-      width: '115px',
+     <motion.div className="switch"
+     initial={{
       height: '10px',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
       display: 'flex',
@@ -157,9 +156,14 @@ const LandingPage = () => {
       cursor: 'pointer',
       position: 'fixed',
       top: '32px',
-      left: midWindow.current - 60,
+      left: windowDims[0],
       zIndex: '100'
-     }} 
+     }}
+     animate={{
+      left: windowDims[0] * 0.43,
+      top: '32px',
+     }}
+     transition={fade}
      data-ison={isOn}>
       <motion.div
         onPointerOver={() => setIsHover(true)}
@@ -176,7 +180,7 @@ const LandingPage = () => {
       />
       <br/>
       <p style={styles.text}>Slide to enter</p>
-    </div>
+    </motion.div>
      </div>
      <div id='fullWindow' 
       style={{
