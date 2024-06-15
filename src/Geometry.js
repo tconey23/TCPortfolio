@@ -82,6 +82,10 @@ const Geometry = ({ setOnHover, setCameraPosition }) => {
   const mouse = new THREE.Vector2();
   const{x,y} = useMousePosition()
 
+  const customCursorStyle = {
+    cursor: 'url(/roll.ico), auto',
+  };
+
   const enterSite = () => {
     navigate('/home');
   };
@@ -156,7 +160,7 @@ const Geometry = ({ setOnHover, setCameraPosition }) => {
   
 
   return (
-    <group>
+    <group >
       {/* <RigidBody mass={100} ref={pointRef} /> */}
       
       <RigidBody colliders='trimesh' type='fixed'>
@@ -165,6 +169,7 @@ const Geometry = ({ setOnHover, setCameraPosition }) => {
         </BoxContainer>
       </RigidBody>
       <RigidBody
+        
         onPointerDown={(e) => handleClick(e)}
         onPointerUp={(e) => handlePointerUp(e)}
         mass={1000}

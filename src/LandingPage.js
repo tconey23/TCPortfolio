@@ -12,6 +12,7 @@ import { Vector3 } from 'three';
 import { Link } from 'react-router-dom';
 import { Stats } from '@react-three/drei';
 
+
 const CameraControl = ({cameraPosition}) => {
   const {camera} = useThree()
   const planeRef = useRef()
@@ -41,6 +42,8 @@ const LandingPage = () => {
   const [canvasStyle, setCanvasStyle] = useState(styles.canvas)
   const [handleStyle, setHandleStyle] = useState(styles.handle)
   const handleX = useRef(0)
+  const midWindow = useRef()
+  const rightWindow = useRef()
 
   const light = new THREE.PointLight( 0xff0000, 100, 5 ); 
   const light2 = new THREE.PointLight( 0x22ff00, 100, 5 ); 
@@ -89,6 +92,9 @@ const LandingPage = () => {
 
     styles.canvas['top']= windowDims[1] * 0.01
     styles.canvas['left']= windowDims[0] * 0.01
+
+    midWindow.current = windowDims[0] * 0.5
+    rightWindow.current = windowDims[0] - 170
 
   }, [window.outerHeight, window.outerWidth])
 
@@ -139,7 +145,22 @@ const LandingPage = () => {
   return (
     <div id='landingSplash' style={styles.splash}>
      <div>
-     <div className="switch" style={styles.switch} data-ison={isOn}>
+     <div className="switch" 
+     style={{
+      width: '115px',
+      height: '10px',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+      display: 'flex',
+      justifyContent: 'flex-start',
+      borderRadius: '50px',
+      padding: '10px',
+      cursor: 'pointer',
+      position: 'fixed',
+      top: '32px',
+      left: midWindow.current - 60,
+      zIndex: '100'
+     }} 
+     data-ison={isOn}>
       <motion.div
         onPointerOver={() => setIsHover(true)}
         onPointerOut={() => setIsHover(false)}
@@ -157,8 +178,40 @@ const LandingPage = () => {
       <p style={styles.text}>Slide to enter</p>
     </div>
      </div>
-      <motion.h1 style={styles.text1} layout transition={fade} initial={{x: 3000}} animate={{x: styles.text1['left']}}>TOM</motion.h1>
-      <motion.h1 style={styles.text1} layout transition={spring2} initial={{x: 3000, opacity: 0}} animate={{x: styles.text1['left'], y: 60, opacity: 1}}>CONEY</motion.h1>
+     <div id='fullWindow' 
+      style={{
+        width: windowDims[0], 
+        height: windowDims[1],
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+        }}>
+        <motion.h1 
+          layout 
+          transition={fade} 
+          initial={{
+            position: 'absolute',
+            left: windowDims[0] + 100, 
+            top: 0
+          }} 
+          animate={{
+            left: windowDims[0] - 145
+            }}>TOM</motion.h1>
+        <motion.h1 
+          layout 
+          transition={spring2} 
+          initial={{
+            position: 'absolute',
+            left: windowDims[0] + 100, 
+            opacity: 0
+            }} 
+          animate={{
+            left: windowDims[0] - 200, 
+            top: 60, 
+            opacity: 1
+            }}>CONEY</motion.h1>
+     </div>
   
       <motion.div style={clipStyle[0]}></motion.div >
       <motion.div  style={clipStyle[1]}></motion.div >
@@ -172,7 +225,7 @@ const LandingPage = () => {
           <primitive position={lightPosition[1]} object={light2}/>
           <primitive position={lightPosition[2]} object={light3}/>
           <Physics gravity={[0,-0.5,0]} colliders={type}>
-              <Geometry setOnHover={setOnHover} castShadow receiveShadow setCameraPosition={setCameraPosition}/>
+              <Geometry style={styles.geo} setOnHover={setOnHover} castShadow receiveShadow setCameraPosition={setCameraPosition}/>
           </Physics>
           {/* <OrbitControls /> */}
         </Canvas>
@@ -182,8 +235,30 @@ const LandingPage = () => {
           </motion.div> 
         }    
       </motion.div>
-        <motion.h2 style={styles.text2} layout transition={fade} initial={{x: -500}} animate={{x:100, opacity: 1,}}>FRONTEND</motion.h2>
-        <motion.h2 style={styles.text2} layout transition={spring2} initial={{opacity: 0}} animate={{x:100, opacity: 1, y: 60}}>ENGINEER</motion.h2>  
+        <motion.h2 
+            layout 
+            transition={fade} 
+            initial={{
+            left: -windowDims[0],
+            top: windowDims[1] * 0.65
+          }} 
+          animate={{
+            left: 30,
+            top: windowDims[1] * 0.65,
+            opacity: 1,
+             }}>FRONTEND</motion.h2>
+        <motion.h2 
+          layout 
+          transition={spring2} 
+          initial={{
+            left: -windowDims[0], 
+            opacity: 0
+            }} 
+          animate={{
+            left: 30, 
+            opacity: 1, 
+            top: windowDims[1] * 0.65 + 60
+            }}>ENGINEER</motion.h2>  
     </div>
   )
 }
@@ -301,25 +376,18 @@ const styles={
     height: '10px',
     backgroundColor: 'whitesmoke',
     borderRadius: '40px',
-    position: 'absolute'
+    position: 'absolute',
+    cursor: 'pointer'
 },
 switch: {
-  width: '115px',
-  height: '10px',
-  backgroundColor: 'rgba(255, 255, 255, 0.4)',
-  display: 'flex',
-  justifyContent: 'flex-start',
-  borderRadius: '50px',
-  padding: '10px',
-  cursor: 'pointer',
-  position: 'fixed',
-  top: '32px',
-  left: '49vw',
-  zIndex: '100'
+
 },
 text: {
   color: '#ff8800',
   marginTop: '20px',
   marginLeft: '18px'
 },
+geo:{
+  cursor: 'pointer'
+}
 }

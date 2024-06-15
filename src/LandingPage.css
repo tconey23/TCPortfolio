@@ -1,0 +1,67 @@
+#landingSplash {
+    height: '100vh'; 
+    width: '100vw';
+    background: '#16191d'
+}
+
+  #canvas {
+    height: 99vh;
+    width: 100vw;
+    position: fixed;
+    top: '';
+    left: '';
+    z-index: 20;
+  }
+  
+  #link {
+    font-size: 80px;
+    color: #ff8800;
+    position: absolute;
+    top: 45vh;
+    left: 45vw;
+    z-index: 100;
+    width: 200px;
+    background: black;
+    box-shadow: 0px 0px 13px 1px #ffffffc7;
+    border-radius: 24px;
+  }
+  
+  #text1 {
+    top: '';
+    left: '';
+  }
+  
+  #text2 {
+    top: '';
+    left: '';
+  }
+  
+  #handle {
+    width: 15px;
+    height: 10px;
+    background-color: whitesmoke;
+    border-radius: 40px;
+    position: absolute;
+    cursor: pointer;
+  }
+  
+  #switch {
+    width: 115px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 50px;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 32px;
+    left: 49vw;
+    z-index: 100;
+  }
+  
+  
+
+
+
+  
