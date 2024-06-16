@@ -8,12 +8,16 @@ import React, {useState, useRef} from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
+import ProjectDisplay from './ProjectDisplay';
 
 
 function App() {
 
   const [isOn, setIsOn] = useState(false);
   const toggleSwitch = () => setIsOn(!isOn);
+  const [projURL, setURL] = useState()
+  const [projTitle, setTitle] = useState()
+  const [projDesc, setDesc] = useState()
 
   const getHandleStyle = () => {
       return {
@@ -53,8 +57,9 @@ function App() {
       <main id='mainContent'>
         <Routes>
           <Route path={'/'} element={<LandingPage />}/>
-          <Route path={'/Home'} element={<Home />}/>
+          <Route path={'/Home'} element={<Home setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>}/>
           <Route path={'/Contact'} element={<Contact />}/>
+          <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
         </Routes>
       </main>
     </div>

@@ -6,16 +6,15 @@ import Projects from './Projects';
 import Carousel from './Carousel';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-const Home = () => {
+const Home = ({setURL, setTitle, setDesc}) => {
 
     return (
-        <>
-    <Carousel />
-    <section style={styles.projects}>
-    <h3>Featured Projects</h3>
-        <Projects />
-    </section>
-
+    <>
+        <Carousel />
+        <section style={styles.projects}>
+            <h3>Featured Projects</h3>
+            <Projects setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>
+        </section>
     </>
   )
 }

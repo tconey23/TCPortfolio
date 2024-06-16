@@ -33,7 +33,7 @@ const useMousePosition = () => {
   return mousePosition;
 };
 
-const opac = 0
+const opac = 0.5
 const BoxContainer = () => (
   <group position={[0, 0, 0]}>
     <Plane castShadow receiveShadow args={[50, 60]} position={[0, 0, -25]}>
@@ -139,50 +139,30 @@ const Geometry = ({ setOnHover, setCameraPosition }) => {
         let yAxis = y * 0.05
 
         let force = new Vector3(-r*xAxis,-r*yAxis,0)
-        // bodyRef.current.applyTorqueImpulse(force, true)
-        // console.log(r*xAxis,r*yAxis,0)
       }
 
       if(!clicked){
-        // bodyRef.current.resetTorques(true)
         let force = new Vector3(0,0,0)
         bodyRef.current.applyTorqueImpulse(force, true)
       }
-  });
-
-  // useRevoluteJoint(bodyRef, pointRef, [
-  //   [0,0,0],
-  //   [0,0,0],
-  //   [1,1,1],
-  //   [0,0,1]
-  // ]);
-
-  
+  })
 
   return (
-    <group >
-      {/* <RigidBody mass={100} ref={pointRef} /> */}
-      
-      <RigidBody colliders='trimesh' type='fixed'>
-        <BoxContainer receiveShadow>
-
-        </BoxContainer>
-      </RigidBody>
-      <RigidBody
-        
-        onPointerDown={(e) => handleClick(e)}
-        onPointerUp={(e) => handlePointerUp(e)}
-        mass={1000}
-        restitution={0}
-        ref={bodyRef}
-        type="dynamic"
-        colliders="trimesh"
-        position={[0, 1, 0]}
-      >
-        <primitive ref={dodec} castShadow receiveShadow object={obj} />
-      </RigidBody>
-    </group>
-  );
+      <group >
+        <RigidBody
+          onPointerDown={(e) => handleClick(e)}
+          onPointerUp={(e) => handlePointerUp(e)}
+          mass={1000}
+          restitution={0}
+          ref={bodyRef}
+          type="dynamic"
+          colliders="trimesh"
+          position={[0, 1, 0]}
+        >
+          <primitive ref={dodec} castShadow receiveShadow object={obj} />
+        </RigidBody>
+      </group>
+    );
   };
   
   export default Geometry;

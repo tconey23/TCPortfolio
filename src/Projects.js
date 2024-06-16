@@ -5,12 +5,18 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { DisplayP3ColorSpace } from 'three'
 
-const Projects = () => {
+const Projects = ({setURL, setTitle, setDesc}) => {
   const projectList = useMemo(()=>{
     const projList = []
     const proj = Object.entries(projects)
 
-  
+    const handleClick = (i) => {
+      console.log(projects[i].title)
+      setURL(projects[i].url)
+      setTitle(projects[i].title)
+      setDesc(projects[i].description)
+    }
+
     for(let i = 0; i < proj.length; i++){
       if(projects[i].featured){
         projList.push(
@@ -19,8 +25,8 @@ const Projects = () => {
             <h2 style={styles.title}>{projects[i].title}</h2>
             <p style={styles.description}>
               {projects[i].description}
-              <Link style={styles.link}target="_blank" to={projects[i].url}>more...</Link>
-              </p>
+              <Link onClick={() => handleClick(i)} style={styles.link} to={'/ViewProject'}>more...</Link>
+            </p>
           </div>
           {/* <div style={styles.imgCont}>
             <img src={projects[i].img} style={styles.img}/>

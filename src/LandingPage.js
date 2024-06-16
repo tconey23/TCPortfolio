@@ -228,7 +228,7 @@ const LandingPage = () => {
           <primitive position={lightPosition[0]} object={light}/>
           <primitive position={lightPosition[1]} object={light2}/>
           <primitive position={lightPosition[2]} object={light3}/>
-          <Physics gravity={[0,-0.5,0]} colliders={type}>
+          <Physics gravity={[0,0,0]} colliders={type}>
               <Geometry style={styles.geo} setOnHover={setOnHover} castShadow receiveShadow setCameraPosition={setCameraPosition}/>
           </Physics>
           {/* <OrbitControls /> */}
