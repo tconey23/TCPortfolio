@@ -76,14 +76,14 @@
 
 #landingSplash {
   h1{
-    font-size: 80px;
+    font-size: 70px;
     color: whitesmoke;
     position: absolute;
     left: 0px;
     z-index: 10;
   }
   h2{
-    font-size: 80px;
+    font-size: 70px;
     color: #ff8800;
     position: absolute;
     left: 0px;
@@ -118,4 +118,114 @@ h2{
     text-wrap: nowrap;
   }
 
+  .projects {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: #ff8800;
+    font-size: 30px;
+  }
+
+  @media screen and (min-width: 379px) and (max-width: 430px) {
+    .projects {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      color: #ff8800;
+      font-size: 30px;
+      h3{
+        font-size: 20px;
+        margin-top: 10px
+      }
+      div{
+        section{
+          div{
+            font-size: 20px !important;
+            display: flex  !important;
+            flex-direction: row  !important;
+            flex-wrap: nowrap  !important;
+            align-items: flex-start  !important;
+            justify-content: flex-start  !important;
+            h2{
+              font-size: 20px !important;
+              display: flex  !important;
+              flex-direction: row  !important;
+              flex-wrap: wrap  !important;
+              align-items: flex-start  !important;
+              justify-content: flex-start  !important;
+            }
+            p{
+              font-size: 15px !important;
+            }
+          }
+        }
+      }
+    }
+    .carousel {
+      width: 100vw;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0px;
+      flex-direction: column;
+      color: #ff8800;
+      font-size: 20px;
+      .slick-slide > div > div, 
+      .slick-active > div > div, 
+      .slick-current > div > div{
+        display: flex !important;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-evenly;
+        max-height: 150px;
+        scale: 0.40;
+        p{
+          color: #ff8800;
+          font-family: "Bebas Neue", sans-serif;
+          font-weight: 400;
+          font-style: normal;
+          font-size: 60px;
+          margin-top: 20px;
+          margin-bottom: 0px;
+        }
+        #r3f{
+          margin-top: 0px;
+          margin-bottom: -0px;
+        }
+      }
+    }
+
+    #titleName{
+      font-size: 1.5em;
+      text-wrap: nowrap;
+      margin-left: 10px
+    }
+  
+    #socials{
+      text-wrap: nowrap;
+      font-size: 15px;
+    }
+
+    img{
+      display: none !important;
+    }
+
+    #sideBar{
+      width: 40vw !important;
+    }
+
+    textarea{
+      width: 96vw !important;
+    }
+  }
 

@@ -19,7 +19,7 @@ const Carousel = () => {
     };
 
     return (
-    <div style={styles.carousel}>
+    <div className='carousel'>
         <h2>Tech Stack</h2>
         <Slider style={styles.slider} {...settings}>
             <div>
@@ -91,17 +91,6 @@ const styles = {
     },
     slider: {
         width: '75vw',
-    },
-    carousel: {
-        width: '100vw',
-        display: 'flex',
-        flexWrap: 'nowrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: '10px',
-        flexDirection: 'column',
-        color: '#ff8800',
-        fontSize: '25px'
     },
     mocha: {
         scale: '0.5'

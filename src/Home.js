@@ -11,7 +11,7 @@ const Home = ({setURL, setTitle, setDesc}) => {
     return (
     <>
         <Carousel />
-        <section style={styles.projects}>
+        <section className='projects'>
             <h3>Featured Projects</h3>
             <Projects setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>
         </section>

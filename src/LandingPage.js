@@ -44,6 +44,12 @@ const LandingPage = () => {
   const handleX = useRef(0)
   const midWindow = useRef()
   const rightWindow = useRef()
+  const [initialState, setInitialState] = useState()
+  const tom = useRef()
+  const coney = useRef()
+  const frontend = useRef()
+  const engineer = useRef()
+  const enterSwitch = useRef()
 
   const light = new THREE.PointLight( 0xff0000, 100, 5 ); 
   const light2 = new THREE.PointLight( 0x22ff00, 100, 5 ); 
@@ -96,6 +102,8 @@ const LandingPage = () => {
     midWindow.current = windowDims[0] * 0.5
     rightWindow.current = windowDims[0] - 170
 
+
+
   }, [window.outerHeight, window.outerWidth])
 
     useEffect(() => {
@@ -103,6 +111,146 @@ const LandingPage = () => {
         setIsOn(!isOn);
       }
     }, [position])
+
+    useEffect(() => {
+
+      let tomWidth, coneyWidth, frontendWidth, engineerWidth, switchWidth
+      let tomHeight, coneyHeight, frontendHeight, engineerHeight
+      let fullFont = '80px'
+      let mobileFont = '40px'
+
+      if(tom.current){
+        tomWidth = tom.current.offsetWidth / 2 
+        coneyWidth = coney.current.offsetWidth / 2 
+        frontendWidth = frontend.current.offsetWidth / 2 
+        engineerWidth = engineer.current.offsetWidth / 2 
+        switchWidth = enterSwitch.current.offsetWidth / 2 
+
+        tomHeight = tom.current.offsetHeight / 2 + 10
+        coneyHeight = coney.current.offsetHeight / 2 + 10
+        frontendHeight = frontend.current.offsetHeight / 2 + 10
+        engineerHeight = engineer.current.offsetHeight / 2 + 10
+      }
+    
+      const fullState = [{
+        position: 'absolute',
+        left: windowDims[0] + 100, 
+        top: 0,
+        fontSize: fullFont
+      }, 
+      {
+        position: 'absolute',
+        left: windowDims[0] + 100, 
+        opacity: 0,
+        fontSize: initialState
+        },
+        {
+          left: -windowDims[0],
+          top: windowDims[1] * 0.65,
+          fontSize: initialState
+        },
+        {
+          left: -windowDims[0], 
+          opacity: 0,
+          fontSize: initialState
+        }]
+
+      const mobileState = [
+          [
+            {
+              position: 'absolute',
+              left: windowDims[0] + 100, 
+              top: windowDims[0],
+              fontSize: mobileFont
+            },
+              {
+                position: 'absolute',
+                left: windowDims[0] /2 - tomWidth, 
+                top: windowDims[0] * 0.25,
+                fontSize: mobileFont 
+              }
+          ], 
+          [
+            {
+              position: 'absolute',
+              left: windowDims[0] + 100, 
+              opacity: 0,
+              fontSize: mobileFont
+            },
+              {
+                position: 'absolute',
+                left: windowDims[0] / 2 - coneyWidth, 
+                top: windowDims[0] * 0.25 + coneyHeight,
+                opacity: 1,
+                fontSize: mobileFont
+              }
+          ],
+          [
+            {
+              left: -windowDims[0],
+              top: windowDims[1],
+              fontSize: mobileFont
+            },
+            {
+              left: windowDims[0] /2 - frontendWidth,
+              top: windowDims[1] * 0.75,
+              fontSize: mobileFont
+            }
+          ],
+          [
+            {
+              left: -windowDims[0],
+              top: windowDims[1],
+              fontSize: mobileFont
+            },
+            {
+              left: windowDims[0] /2 - engineerWidth,
+              top: windowDims[1] * 0.75 + engineerHeight,
+              fontSize: mobileFont
+            }
+        ],
+        [{
+          height: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          borderRadius: '50px',
+          padding: '10px',
+          cursor: 'pointer',
+          position: 'fixed',
+          top: '32px',
+          left: windowDims[0],
+          zIndex: '100'
+         },
+         {
+          height: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          borderRadius: '50px',
+          padding: '10px',
+          cursor: 'pointer',
+          position: 'fixed',
+          left: windowDims[0] /2 - switchWidth,
+          top: '32px',
+          zIndex: '100'
+          
+         }
+        ]
+      ]
+      const setFont = async () => {
+        await window.outerWidth > 400 ? setInitialState(fullState) : setInitialState(mobileState)
+       }
+ 
+       setFont()
+
+    }, [tom, coney, frontend, engineer, enterSwitch, initialState])
+
+    useEffect(() => {
+
+    }, [])
+
+
 
     const handleDrag = (event, info) => {
       let pos = info.offset.x
@@ -145,24 +293,12 @@ const LandingPage = () => {
   return (
     <div id='landingSplash' style={styles.splash}>
      <div>
-     <motion.div className="switch"
-     initial={{
-      height: '10px',
-      backgroundColor: 'rgba(255, 255, 255, 0.4)',
-      display: 'flex',
-      justifyContent: 'flex-start',
-      borderRadius: '50px',
-      padding: '10px',
-      cursor: 'pointer',
-      position: 'fixed',
-      top: '32px',
-      left: windowDims[0],
-      zIndex: '100'
-     }}
-     animate={{
-      left: windowDims[0] * 0.43,
-      top: '32px',
-     }}
+{ initialState &&
+    <motion.div 
+     className="switch"
+     ref={enterSwitch}
+     initial={initialState[4][0]}
+     animate={initialState[4][1]}
      transition={fade}
      data-ison={isOn}>
       <motion.div
@@ -180,7 +316,7 @@ const LandingPage = () => {
       />
       <br/>
       <p style={styles.text}>Slide to enter</p>
-    </motion.div>
+    </motion.div>}
      </div>
      <div id='fullWindow' 
       style={{
@@ -191,30 +327,23 @@ const LandingPage = () => {
         justifyContent: 'center',
         alignItems: 'center'
         }}>
+        {initialState && 
+          <>
+          
         <motion.h1 
+        ref={tom}
           layout 
           transition={fade} 
-          initial={{
-            position: 'absolute',
-            left: windowDims[0] + 100, 
-            top: 0
-          }} 
-          animate={{
-            left: windowDims[0] - 145
-            }}>TOM</motion.h1>
+          initial={initialState[0][0]} 
+          animate={initialState[0][1]}>TOM</motion.h1>
         <motion.h1 
+        ref={coney}
           layout 
           transition={spring2} 
-          initial={{
-            position: 'absolute',
-            left: windowDims[0] + 100, 
-            opacity: 0
-            }} 
-          animate={{
-            left: windowDims[0] - 200, 
-            top: 60, 
-            opacity: 1
-            }}>CONEY</motion.h1>
+          initial={initialState[1][0]} 
+          animate={initialState[1][1]}>CONEY</motion.h1>
+            </>
+            }
      </div>
   
       <motion.div style={clipStyle[0]}></motion.div >
@@ -239,30 +368,22 @@ const LandingPage = () => {
           </motion.div> 
         }    
       </motion.div>
+
+     {initialState && <>
         <motion.h2 
+        ref={frontend}
+            className='splash-text'
             layout 
             transition={fade} 
-            initial={{
-            left: -windowDims[0],
-            top: windowDims[1] * 0.65
-          }} 
-          animate={{
-            left: 30,
-            top: windowDims[1] * 0.65,
-            opacity: 1,
-             }}>FRONTEND</motion.h2>
+            initial={initialState[2][0]} 
+            animate={initialState[2][1]}>FRONTEND</motion.h2>
         <motion.h2 
+        ref={engineer}
           layout 
           transition={spring2} 
-          initial={{
-            left: -windowDims[0], 
-            opacity: 0
-            }} 
-          animate={{
-            left: 30, 
-            opacity: 1, 
-            top: windowDims[1] * 0.65 + 60
-            }}>ENGINEER</motion.h2>  
+          initial={initialState[3][0]} 
+          animate={initialState[3][1]}>ENGINEER</motion.h2>  
+          </>}
     </div>
   )
 }
@@ -389,7 +510,7 @@ switch: {
 text: {
   color: '#ff8800',
   marginTop: '20px',
-  marginLeft: '18px'
+  marginLeft: '0px'
 },
 geo:{
   cursor: 'pointer'
