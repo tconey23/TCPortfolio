@@ -2,7 +2,7 @@ import React from 'react'
 import { overlay } from 'three/examples/jsm/nodes/Nodes.js'
 import projects from './projects.json'
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { DisplayP3ColorSpace } from 'three'
 
 const Projects = ({setURL, setTitle, setDesc}) => {
@@ -25,7 +25,7 @@ const Projects = ({setURL, setTitle, setDesc}) => {
             <h2 style={styles.title}>{projects[i].title}</h2>
             <p style={styles.description}>
               {projects[i].description}
-              <Link onClick={() => handleClick(i)} style={styles.link} to={'/ViewProject'}>more...</Link>
+              <NavLink className='nav-link' onClick={() => handleClick(i)} style={styles.link} to={'/ViewProject'}>more...</NavLink>
             </p>
           </div>
           {/* <div style={styles.imgCont}>

@@ -41,6 +41,7 @@ const LandingPage = () => {
   const [clipStyle, setClipStyle] = useState([styles.clip, styles.clip2])
   const [canvasStyle, setCanvasStyle] = useState(styles.canvas)
   const [handleStyle, setHandleStyle] = useState(styles.handle)
+  const [renderCanvas, setRenderCanvas] = useState(false)
   const handleX = useRef(0)
   const midWindow = useRef()
   const rightWindow = useRef()
@@ -50,6 +51,7 @@ const LandingPage = () => {
   const frontend = useRef()
   const engineer = useRef()
   const enterSwitch = useRef()
+  const [showSwitch, setShowSwitch] = useState(true)
 
   const light = new THREE.PointLight( 0xff0000, 100, 5 ); 
   const light2 = new THREE.PointLight( 0x22ff00, 100, 5 ); 
@@ -116,44 +118,86 @@ const LandingPage = () => {
 
       let tomWidth, coneyWidth, frontendWidth, engineerWidth, switchWidth
       let tomHeight, coneyHeight, frontendHeight, engineerHeight
+      let tomTop, frontendTop
       let fullFont = '80px'
       let mobileFont = '40px'
 
       if(tom.current){
+        tomTop = parseInt((tom.current.style.top).split('px')[0])
+        frontendTop = parseInt((tom.current.style.top).split('px')[0])
         tomWidth = tom.current.offsetWidth / 2 
         coneyWidth = coney.current.offsetWidth / 2 
         frontendWidth = frontend.current.offsetWidth / 2 
         engineerWidth = engineer.current.offsetWidth / 2 
-        switchWidth = enterSwitch.current.offsetWidth / 2 
+        switchWidth = enterSwitch.current.offsetWidth / 2
 
         tomHeight = tom.current.offsetHeight / 2 + 10
         coneyHeight = coney.current.offsetHeight / 2 + 10
         frontendHeight = frontend.current.offsetHeight / 2 + 10
         engineerHeight = engineer.current.offsetHeight / 2 + 10
       }
+
     
-      const fullState = [{
+      const fullState = [
+        [{
         position: 'absolute',
         left: windowDims[0] + 100, 
         top: 0,
         fontSize: fullFont
-      }, 
+      },
       {
+        left: windowDims[0] / 1.3, 
+      }], 
+      [{
         position: 'absolute',
         left: windowDims[0] + 100, 
         opacity: 0,
         fontSize: initialState
         },
         {
+          left: windowDims[0] / 1.3, 
+          top : tomTop + tomHeight + 8,
+          opacity: 1,
+          }],
+        [{
           left: -windowDims[0],
           top: windowDims[1] * 0.65,
           fontSize: initialState
         },
         {
+          left: windowDims[0] / 10,
+          top: windowDims[1] * 0.65,
+        }],
+        [{
           left: -windowDims[0], 
           opacity: 0,
           fontSize: initialState
-        }]
+        },
+        {
+          left: windowDims[0] / 10,
+          top: windowDims[1] * 0.65 + frontendHeight - 3,
+          opacity: 1,
+        }],
+        [{
+          height: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          borderRadius: '50px',
+          padding: '10px',
+          cursor: 'pointer',
+          position: 'fixed',
+          top: '32px',
+          left: windowDims[0] /2 - 15,
+          opacity: 0,
+          zIndex: '100'
+         },
+         {
+          left: windowDims[0] /2 - 15,
+          opacity: 1,
+         }
+        ]
+      ]
 
       const mobileState = [
           [
@@ -246,8 +290,14 @@ const LandingPage = () => {
 
     }, [tom, coney, frontend, engineer, enterSwitch, initialState])
 
-    useEffect(() => {
+    useEffect(() =>{
 
+    }, [tom.current])
+
+    useEffect(() => {
+      setTimeout(() => {
+        setRenderCanvas(true)
+      }, 3000);
     }, [])
 
 
@@ -293,7 +343,7 @@ const LandingPage = () => {
   return (
     <div id='landingSplash' style={styles.splash}>
      <div>
-{ initialState &&
+{ initialState && showSwitch && 
     <motion.div 
      className="switch"
      ref={enterSwitch}
@@ -311,7 +361,7 @@ const LandingPage = () => {
         dragElastic={0}
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
-        animate={{ x: isOn ? 60 : 0 }}
+        animate={{ x: isOn ? 60 : 0 }} // Ensure this uses only two keyframes
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       />
       <br/>
@@ -350,7 +400,7 @@ const LandingPage = () => {
       <motion.div  style={clipStyle[1]}></motion.div >
       <motion.div layout transition={floatIn} initial={{x:-5000}} animate={{x:0, y: 0,}}>
         {/* <Stats /> */}
-        <Canvas style={canvasStyle}>
+        {renderCanvas && <Canvas style={canvasStyle}>
           <CameraControl cameraPosition={cameraPosition} setWindowDims={setWindowDims}/>
           <directionalLight castShadow intensity={2} color={'white'}/>
           <ambientLight intensity={10} position={lightPosition[0]}/>
@@ -361,7 +411,7 @@ const LandingPage = () => {
               <Geometry style={styles.geo} setOnHover={setOnHover} castShadow receiveShadow setCameraPosition={setCameraPosition}/>
           </Physics>
           {/* <OrbitControls /> */}
-        </Canvas>
+        </Canvas>}
         {onHover && 
           <motion.div onPointerOver={()=>{setOnHover(true)}} layout transition={fade2} initial={{opacity: 0}} animate={{opacity: 1}}>  
             <Link style={styles.link} to={'/home'}>ENTER</Link>

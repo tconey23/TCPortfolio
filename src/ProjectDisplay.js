@@ -24,10 +24,10 @@ export default ProjectDisplay
 
 const styles = {
     iframe:{
-        marginTop: '-93px',
-        width: '75vw',
-        height: '89vh',
-        scale: '0.8'
+        marginTop: '-72px',
+        width: '80vw',
+        height: '75vh',
+        scale: '0.80'
     },
     title: {
         color: '#ff8800'

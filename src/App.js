@@ -35,7 +35,7 @@ function App() {
             </motion.div> 
         }
         <div style={styles.switchCont}>
-            <div className="switch" style={styles.switch} data-isOn={isOn} onClick={toggleSwitch}>
+            <div className="switch" style={styles.switch} data-ison={isOn} onClick={toggleSwitch}>
                 <motion.div className="handle" style={getHandleStyle()} layout transition={button} />
             </div>
         </div>

@@ -203,6 +203,9 @@ h2{
           margin-bottom: -0px;
         }
       }
+      .slick-dots, .slick-arrow{
+        display: none !important;
+      }
     }
 
     #titleName{
@@ -228,4 +231,28 @@ h2{
       width: 96vw !important;
     }
   }
+
+  .slick-slide img{
+    display: block !important;
+  }
+
+  .nav-link{
+    color: orange !important;
+    margin-left: 10px
+  }
+
+  canvas{
+    opacity: 0;
+    animation: fadeInCanvas 2.5s ease-in 1s forwards;
+  }
+
+  @keyframes fadeInCanvas {
+    0%{
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
 
