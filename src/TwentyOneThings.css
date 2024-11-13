@@ -1,0 +1,13 @@
+.things-wrapper {
+   width: 98%;
+   height: 98vh;
+   padding-top: 20px;
+
+   header {
+
+    h2, p {
+        color: white;
+    }
+   }
+
+}

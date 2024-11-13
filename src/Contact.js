@@ -3,7 +3,7 @@ import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const initialState = {
-    name: '',
+    name: '', 
     from: '',
     message: '',
   };

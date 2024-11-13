@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
 import ProjectDisplay from './ProjectDisplay';
+import TwentyOneThings from './TwentyOneThings';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path={'/Home'} element={<Home setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>}/>
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
+          <Route path={'/21Things'} element={<TwentyOneThings />}/>
         </Routes>
       </main>
     </div>
