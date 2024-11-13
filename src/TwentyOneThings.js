@@ -129,7 +129,7 @@ const TwentyOneThings = () => {
               value={formData.os}
               onChange={handleChange}
             >
-              <FormControlLabel value="iOS" control={<Radio />} label="iOS" />
+              <FormControlLabel value="iOS" control={<Radio />} label="iOS (iPhone)" />
               <FormControlLabel value="Android" control={<Radio />} label="Android" />
             </RadioGroup>
           </Stack>
