@@ -120,7 +120,7 @@ const TwentyOneThings = () => {
 
           <Stack>
             <FormLabel sx={{ color: 'orange'}} id="os-label">
-              Mobile operating System
+              Mobile Operating System
             </FormLabel>
             <RadioGroup
               sx={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 5}}
