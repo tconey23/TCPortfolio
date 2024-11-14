@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EmailConfirmation from './EmailConfirmation';
 import emailjs from 'emailjs-com';
 import './TwentyOneThings.css';
 import { MenuItem, Stack, Typography, TextField, Button, Alert, Select } from '@mui/material';
@@ -9,9 +10,11 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 const TwentyOneThings = () => {
+  const [success, setSuccess] = useState(false)
   const [fieldState, setFieldState] = useState({
     name: false,
     email: false,
+    os: true
   });
 
   const [formData, setFormData] = useState({
@@ -27,12 +30,12 @@ const TwentyOneThings = () => {
       case 'email':
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       default:
-        return false;
+        return true;
     }
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value} = e.target;
 
     setFormData({
       ...formData,
@@ -45,29 +48,28 @@ const TwentyOneThings = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (Object.values(fieldState).includes(false)) {
       alert('Please fill out all fields correctly.');
       return;
     }
-
-    emailjs
-      .send('service_sj8p1yb', 'template_j79vman', formData, 'iEa1QtTEPPBHKUYfL')
-      .then(
-        (result) => {
-          setFormData({
-            name: '',
-            email: '',
-            os: 'iOS',
-            reason: ''
-          });
-        },
-        (error) => {
-          console.log(error.text);
-        }
+  
+    try {
+      const result = await emailjs.send(
+        'service_sj8p1yb',
+        'template_j79vman',
+        formData,
+        'iEa1QtTEPPBHKUYfL'
       );
+
+      setSuccess(true);
+  
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setSuccess(false);
+    }
   };
 
   return (
@@ -139,6 +141,7 @@ const TwentyOneThings = () => {
           </Button>
         </FormControl>
       </Stack>
+      <EmailConfirmation setFormData={setFormData} formData={formData} success={success} setSuccess={setSuccess}/>
     </Stack>
   );
 };
