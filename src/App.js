@@ -9,7 +9,8 @@ import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
 import ProjectDisplay from './ProjectDisplay';
-import TwentyOneThings from './TwentyOneThings';
+import TwentyOneThings from './TwentyOneThings'; 
+import ThingsPrompts from './ThingsPrompts';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
           <Route path={'/21Things'} element={<TwentyOneThings />}/>
+          <Route path={'/Prompts'} element={<ThingsPrompts />}/>
         </Routes>
       </main>
     </div>
