@@ -4,13 +4,14 @@ import { Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import Contact from './Contact';
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
 import ProjectDisplay from './ProjectDisplay';
 import TwentyOneThings from './TwentyOneThings'; 
 import ThingsPrompts from './ThingsPrompts';
+import Login from './Login'
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
   const [projURL, setURL] = useState()
   const [projTitle, setTitle] = useState()
   const [projDesc, setDesc] = useState()
+  const [loggedIn, setLoggedIn] = useState()
+  const [user, setUser] = useState()
 
   const getHandleStyle = () => {
       return {
@@ -27,6 +30,10 @@ function App() {
           marginLeft: isOn ? '15px' : '0px'
       };
   };
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
 
   return (
     <div className="App">
@@ -57,13 +64,14 @@ function App() {
         </div>
     </header>
       <main id='mainContent'>
+        <Login setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         <Routes>
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={'/Home'} element={<Home setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>}/>
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
           <Route path={'/21Things'} element={<TwentyOneThings />}/>
-          <Route path={'/Prompts'} element={<ThingsPrompts />}/>
+         {user && <Route path={'/Prompts'} element={<ThingsPrompts user={user}/>}/>}
         </Routes>
       </main>
     </div>

@@ -5,8 +5,6 @@ form{
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    height: 600px;
-
     label{
         color: #ff8800;
         font-size: 22px;

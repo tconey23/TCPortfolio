@@ -1,5 +1,9 @@
 @import "~@flaticon/flaticon-uicons/css/all/all";
 
+.css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root.Mui-disabled{
+    pointer-events: inherit !important;
+    cursor: not-allowed
+}
 
 .App {
   text-align: center;
