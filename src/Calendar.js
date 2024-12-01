@@ -56,12 +56,9 @@ const Calendar = ({ disabledDates, setSelectedDate, setCalendarLoaded }) => {
             return {
               ...dayProps,
               children: isDisabled ? (
-                  <Button sx={{justifyContent: 'center', alignItems: 'center', display: 'flex'}}>
                     <Tooltip title={title}>
                       <StyledDisabledDay className='disabled-date'>{dayProps.day.format('D')}</StyledDisabledDay>
                     </Tooltip>
-                  </Button>
-                
               ) : (
                 dayProps.children
               ),
