@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import Home from './Home';
 import Contact from './Contact';
 import React, {useState, useRef, useEffect} from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from 'react-error-boundary'
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
@@ -15,6 +17,7 @@ import TwentyOneThings from './TwentyOneThings';
 import ThingsPrompts from './ThingsPrompts';
 import Login from './Login'
 import Error from './Error';
+import Account from './Account';
 
 function App() {
 
@@ -38,15 +41,39 @@ function App() {
   }, [user])
 
   const ProtectedRoute = ({ loggedIn, children }) => {
-    return loggedIn ? children : <Navigate to="/login" />;
+    const location = useLocation();
+  
+    if (!loggedIn) {
+      // Redirect to login and pass the requested path in state
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
+  
+    return children;
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true)
+        // Update state or context with user info
+      } else {
+        setLoggedIn(false)
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, [auth]);
+
+  const handleCloseMenu = () => {
+    isOn && setIsOn(false)
+  }
+
   return (
-    <div className="App">
+    <div className="App" onClick={() => handleCloseMenu()}>
         <header className="App-header" style={styles.header}>
         {isOn && 
             <motion.div id='sideBar' style={styles.sideBar} layout transition={spring} animate={{x:500, opacity: 1, duration: 1}}>
-                <SideBar setIsOn={setIsOn}/>
+                <SideBar setIsOn={setIsOn} loggedIn={loggedIn} user={user} setUser={setUser}/>
             </motion.div> 
         }
         <div style={styles.switchCont}>
@@ -79,12 +106,9 @@ function App() {
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
           <Route path={'/Error'} element={<Error />}/>
-          <Route path={'/21Things'}             
-          element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <TwentyOneThings />
-              </ProtectedRoute>
-              }/>
+          <Route path={'/login'} element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>}/>          
+          <Route path={'/21Things'} element={<TwentyOneThings />}/>
+          <Route path={'/account'} element={<Account user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
           <Route
             path="/prompts"
             element={

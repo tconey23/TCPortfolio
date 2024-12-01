@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { Alert, Button, Modal, RadioGroup, Stack, FormControlLabel, Radio, FormControl, FormLabel, TextField, Typography } from '@mui/material';
 import { ref, set, get, child } from 'firebase/database';
 import {users} from './firebase'
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,8 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     const isPasswordValid = password && confirmPass && password === confirmPass;
@@ -58,7 +61,8 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true)
-        // Update state or context with user info
+        const redirectTo = location.state?.from?.pathname || "/";
+        navigate(redirectTo);
       } else {
         setLoggedIn(false)
       }

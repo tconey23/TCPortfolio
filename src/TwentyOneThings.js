@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { Link } from 'react-router-dom';
 
 const TwentyOneThings = () => {
   const [success, setSuccess] = useState(false)
@@ -79,6 +80,7 @@ const TwentyOneThings = () => {
       className="things-wrapper"
       sx={{ fontFamily: '"Bebas Neue", sans-serif' }}
     >
+      <Link to={'/prompts'}>Admin Login</Link>
       <Stack className="things-header">
         <Typography fontSize={30} fontFamily={'"Bebas Neue", sans-serif'} color="white">
           Thank you for your interest in 21Things!
