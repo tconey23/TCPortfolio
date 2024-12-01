@@ -20,10 +20,11 @@ const SideBar = (setIsOn) => {
       {typeof setIsOn === 'object' ? 
       <div style={styles.menu}>
             {location.pathname !== '/home' && <Link onClick={() => handleClick()} style={styles.link} to={'/home'}>HOME</Link>}
-            {location.pathname !== '/bio' && <Link onClick={() => handleClick()} style={styles.link}>BIO</Link>}
+            {/* {location.pathname !== '/bio' && <Link onClick={() => handleClick()} style={styles.link}>BIO</Link>} */}
             {location.pathname !== '/portfolio' && <Link onClick={() => handleClick()} style={styles.link}>PORTFOLIO</Link>}
-            {location.pathname !== '/resume' && <Link onClick={() => handleClick()} style={styles.link}>RESUME</Link>}
+            {/* {location.pathname !== '/resume' && <Link onClick={() => handleClick()} style={styles.link}>RESUME</Link>} */}
             {location.pathname !== '/contact' && <Link onClick={() => handleClick()} style={styles.link} to={'/contact'}>CONTACT</Link>}
+            {location.pathname !== '/auth' && <Link onClick={() => handleClick()} style={styles.link} to={'/21Things'}>21Things</Link>}
             <div style={styles.logoCont}>
               <img src='/TC192.png' style={styles.logo}/>
             </div>    

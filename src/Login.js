@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from './firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
 import { Alert, Button, Modal, RadioGroup, Stack, FormControlLabel, Radio, FormControl, FormLabel, TextField, Typography } from '@mui/material';
 import { ref, set, get, child } from 'firebase/database';
 import {users} from './firebase'
@@ -16,43 +16,36 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
   const [displayName, setDisplayName] = useState('');
 
   const handleSignUp = async (e) => {
+    const isPasswordValid = password && confirmPass && password === confirmPass;
+
     e.preventDefault();
+    if (!isPasswordValid) {
+      setError("Passwords do not match");
+      return;
+    }
+  
     try {
-      // Create the user
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+  
       // Set the display name
-      await updateProfile(user, {
-        displayName: displayName,
-      });
-
-      setSuccess(true);
+      await updateProfile(user, { displayName });
+  
+      setSuccess("User signed up successfully!");
       setLoggedIn(true);
-      setUser(displayName)
+      setUser(displayName);
     } catch (err) {
       setError(err.message);
     }
   };
-
+  
   const handleSignIn = async () => {
     try {
-      // Sign in the user
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
   
-      // Retrieve displayName
-      const displayName = user.displayName;
-  
-      if (displayName) {
-        console.log(displayName);
-        setUser(displayName); // Set displayName in your state
-      } else {
-        console.log('No displayName found for this user');
-        setUser('Anonymous'); // Optional fallback
-      }
-  
-      setSuccess('User signed in successfully!');
+      setUser(user.displayName || "Anonymous");
+      setSuccess("User signed in successfully!");
       setLoggedIn(true);
     } catch (err) {
       setError(err.message);
@@ -60,6 +53,19 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
   };
 
   const togglePasswordVisibility = () => setTogglePass((prev) => !prev);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true)
+        // Update state or context with user info
+      } else {
+        setLoggedIn(false)
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, [auth]);
 
   useEffect(() => {
     const fetchData = async () => {

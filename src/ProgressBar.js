@@ -6,8 +6,8 @@ const ProgressBar = () => {
 
     return (
         <Box sx={{ width: '100%' }}>
-        <CircularProgress />
-      </Box>
+            <CircularProgress color='orange'/>
+        </Box>
     )  
 }
 

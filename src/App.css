@@ -5,6 +5,10 @@
     cursor: not-allowed
 }
 
+.css-960umw-MuiCircularProgress-circle{
+  stroke: orange !important
+}
+
 .App {
   text-align: center;
   display: flex;

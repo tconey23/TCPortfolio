@@ -5,6 +5,8 @@ import LandingPage from './LandingPage';
 import Home from './Home';
 import Contact from './Contact';
 import React, {useState, useRef, useEffect} from 'react';
+import { Navigate } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary'
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar';
@@ -12,7 +14,7 @@ import ProjectDisplay from './ProjectDisplay';
 import TwentyOneThings from './TwentyOneThings'; 
 import ThingsPrompts from './ThingsPrompts';
 import Login from './Login'
-
+import Error from './Error';
 
 function App() {
 
@@ -34,6 +36,10 @@ function App() {
   useEffect(() => {
     console.log(user)
   }, [user])
+
+  const ProtectedRoute = ({ loggedIn, children }) => {
+    return loggedIn ? children : <Navigate to="/login" />;
+  };
 
   return (
     <div className="App">
@@ -64,15 +70,32 @@ function App() {
         </div>
     </header>
       <main id='mainContent'>
-        <Login setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      <ErrorBoundary
+        FallbackComponent={() => <h1>Something went wrong!</h1>}
+      >
         <Routes>
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={'/Home'} element={<Home setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>}/>
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>
-          <Route path={'/21Things'} element={<TwentyOneThings />}/>
-         {user && <Route path={'/Prompts'} element={<ThingsPrompts user={user}/>}/>}
+          <Route path={'/Error'} element={<Error />}/>
+          <Route path={'/21Things'}             
+          element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <TwentyOneThings />
+              </ProtectedRoute>
+              }/>
+          <Route
+            path="/prompts"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <ThingsPrompts user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+              </ProtectedRoute>
+              }
+          />
+          {/* <Route path="*" element={<Navigate to="/Error" />} /> */}
         </Routes>
+      </ErrorBoundary>
       </main>
     </div>
   );
