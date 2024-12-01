@@ -9,75 +9,82 @@ import { ref, set, get, child } from 'firebase/database';
 
 const ThingsPrompts = ({user}) => {
 
-    const [disabledDates, setDisabledDates] = useState({date: '12/01/2024', title: 'title'})
+    const [disabledDates, setDisabledDates] = useState(null)
     const [prompts, setPrompts] = useState([])
     const [category, setCategory] = useState()
     const [promptText, setPromptText] = useState()
     const [uploadType, setUploadType] = useState('Upload CSV')
     const [categories, setCategories] = useState()
-    const [csvData, setCsvData] = useState([])
     const [loading, setLoading] = useState()
-    const [changesMade, setChangesMade] = useState({
+    const [changesMade, setChangesMade] = useState({ 
         cat: false, 
         prompts: false,
-        date: false
+        date: false,
+        author: false
     })
     const [success, setSuccess] = useState(false)
     const [date, setDate] = useState()
     const [calendarLoaded, setCalendarLoaded] = useState(false)
+    const [refreshCalendar, setRefreshCalendar] = useState(0)
 
     useEffect(() => {
-        console.log(database[0])
-    }, [database])
+        // console.log(user)
+    }, [database, user])
 
-const handleSubmit = async () => {
+    const handleSubmit = async () => {
+        try {
+          // Format the date to 'November 01, 2024'
+          const formattedDate = new Intl.DateTimeFormat('en-US', {
+            month: 'long',
+            day: '2-digit',
+            year: 'numeric',
+          }).format(new Date(category));
 
-  const newCategory = {
-    [category]: [...prompts],
-    date: `${date.$M + 1}/${date.$D}/${date.$y}`, // Ensure date is formatted correctly
-  };
-
-  try {
-    const categoriesRef = ref(database, 'categories'); // Get a reference to 'categories'
-
-    // Fetch existing categories to determine the next key
-    const snapshot = await get(categoriesRef);
-    let nextKey = 0;
-
-    if (snapshot.exists()) {
-      const existingCategories = snapshot.val();
-      const keys = Object.keys(existingCategories).map((key) => parseInt(key)); // Parse keys as integers
-      nextKey = Math.max(...keys) + 1; // Determine the next key
-      console.log(nextKey);
-    }
-
-    // Add new category to the database
-    const newCategoryRef = child(categoriesRef, nextKey.toString());
-    await set(newCategoryRef, newCategory);
-    console.log('Category added successfully');
-
-    // Update local state
-    setCategories((prevCategories) => [
-      ...prevCategories,
-      {
-        id: nextKey.toString(),
-        ...newCategory,
-      },
-    ]);
-
-    setSuccess(true);
-    setCategory('');
-    setPrompts([]);
-    setChangesMade({
-      cat: false,
-      prompts: false,
-      date: false,
-    });
-  } catch (error) {
-    console.error('Error adding category:', error);
-  }
-};
-
+          const numericDate = new Intl.DateTimeFormat('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+          }).format(new Date(category));
+      
+          const fullCategoryPath = `categories/${formattedDate}`; // E.g., 'categories/November 01, 2024'
+      
+          // Prepare the data with prompts and author
+          const newCategoryData = {
+            prompts: [...prompts], // Array of prompts
+            author: user, // Add the author's name or ID
+            date: numericDate
+          };
+      
+          // Create a reference to the formatted path
+          const categoryRef = ref(database, fullCategoryPath);
+      
+          // Write the data to the specific path
+          await set(categoryRef, newCategoryData);
+      
+          // Update the local state
+          setCategories((prevCategories) => [
+            ...prevCategories,
+            {
+              id: formattedDate,
+              author: user, // Store author in the local state
+              prompts: [...prompts],
+            },
+          ]);
+      
+          // Reset form state
+          setSuccess(true);
+          setCategory('');
+          setPrompts([]);
+          setChangesMade({
+            cat: false,
+            prompts: false,
+            date: false,
+          });
+          setRefreshCalendar(prev => prev +1)
+        } catch (error) {
+          console.error('Error adding category:', error);
+        }
+      };  
 
       useEffect(() => {
         if(success){
@@ -94,7 +101,7 @@ const handleSubmit = async () => {
           reader.onload = (e) => {
             const text = e.target.result;
             Papa.parse(text, {
-              header: false, // Set to true if your CSV has headers
+              header: false,
               complete: (result) => {
                 result.data.forEach((d) => {
                     setPrompts(prev => ([
@@ -159,6 +166,7 @@ const handleSubmit = async () => {
                 date: true
             }))
         }
+
     }, [prompts, category, date])
 
     useEffect(() => {
@@ -199,28 +207,39 @@ const handleSubmit = async () => {
         };
       
         fetchData();
-      }, []);
+      }, [refreshCalendar]);
+
+      useEffect(() =>{
+        if(date) {
+            const formattedDate = new Intl.DateTimeFormat('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric',
+            }).format(new Date(date));
+            // console.log(formattedDate)
+            setCategory(formattedDate)
+        }
+      }, [date])
 
 
       useEffect(() => {
-        console.log(calendarLoaded)
+        // console.log(calendarLoaded)
       }, [calendarLoaded])
       
 
   return (
-    <Stack direction={'row'} width={'90vw'} height={500} justifyContent={'center'} alignItems={'flex-start'} padding={10}>
-        <Stack justifyContent={'center'} alignItems={'center'} sx={{background: 'white', padding: 10}} width={300}>
+    <Stack direction={'row'} width={'90vw'} height={'80vh'} justifyContent={'center'} alignItems={'flex-start'} padding={10}>
+        <Stack justifyContent={'center'} alignItems={'center'} sx={{background: 'white', padding: 10}} width={300} height={'65%'}>
             {success && <Alert sx={{position: 'absolute', top: 100}}>Category added!</Alert>}
             <Stack color={'black'}>
                     {!calendarLoaded && <ProgressBar />}
-                    <Calendar setSelectedDate={setDate} disabledDates={disabledDates} setCalendarLoaded={setCalendarLoaded}/>
-                    {date && <Typography>{`${date.$M+1}/${date.$D}/${date.$y}`}</Typography>}
+                    <Calendar setCalendarLoaded={setCalendarLoaded} setSelectedDate={setDate} disabledDates={disabledDates} refreshCalendar={refreshCalendar} setRefreshCalendar={setRefreshCalendar} />
                 <Select onChange={(e) => setUploadType(e.target.value)} value={uploadType} label={uploadType}>
                     <MenuItem value={'Enter Single Prompts'}>Enter Single Prompts</MenuItem>
                     <MenuItem value={'Upload CSV'}>Upload CSV</MenuItem>
                 </Select>
             </Stack>
-                <TextField required='true' spellCheck={true} onBlur={(e) => setCategory(e.target.value)} sx={{color: 'white', padding: 2}} placeholder='Category Title'/>
+                {/* <TextField required='true' spellCheck={true} onBlur={(e) => setCategory(e.target.value)} sx={{color: 'white', padding: 2}} placeholder='Category Title' value={category}/> */}
                 <TextField label='Author' required='true' defaultValue={user}/>
             {uploadType === 'Enter Single Prompts' ?
             <>

@@ -1,7 +1,7 @@
 // firebase.js
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
+import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 // Firebase configuration for the primary database
 const firebaseConfig = {
@@ -35,5 +35,8 @@ const userApp = initializeApp(firebaseUsers, "userApp"); // Secondary app with u
 const database = getDatabase(app); // Primary database
 const auth = getAuth(app); // Auth for the primary app
 const users = getDatabase(userApp); // Secondary database
+
+setPersistence(auth, browserLocalPersistence)
+  .catch((error) => console.error("Error setting persistence:", error));
 
 export { database, auth, users };
