@@ -86,7 +86,7 @@ const TwentyOneThings = () => {
           Thank you for your interest in 21Things!
         </Typography>
         <Typography fontFamily={'"Bebas Neue", sans-serif'} color="white">
-          Please complete the form below to request access to the beta version of the application.
+          Please complete the form below to request access to the beta version of the application. 
         </Typography>
       </Stack>
 

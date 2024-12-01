@@ -37,7 +37,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(user)
+    console.log(user) 
   }, [user])
 
   const ProtectedRoute = ({ loggedIn, children }) => {

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const SideBar = ({setIsOn, loggedIn}) => {
   const location = useLocation();
-  const [canSetOn, setCanSetOn] = useState(false)
+  const [canSetOn, setCanSetOn] = useState(false) 
 
   const handleClick = () =>{
     setIsOn(false)

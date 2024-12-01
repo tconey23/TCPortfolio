@@ -29,7 +29,7 @@ const Account = ({setLoggedIn, setUser}) => {
 
     const handleLogout = async () => {
         try {
-          await signOut(auth);
+          await signOut(auth); 
           // Perform any additional cleanup or state reset here
           setLoggedIn(false); // Update your app's logged-in state
           setUser(null); // Clear user information

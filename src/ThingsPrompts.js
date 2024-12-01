@@ -16,7 +16,7 @@ const ThingsPrompts = ({user}) => {
     const [uploadType, setUploadType] = useState('Upload CSV')
     const [categories, setCategories] = useState()
     const [loading, setLoading] = useState()
-    const [changesMade, setChangesMade] = useState({
+    const [changesMade, setChangesMade] = useState({ 
         cat: false, 
         prompts: false,
         date: false,

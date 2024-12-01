@@ -51,7 +51,7 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
       setSuccess("User signed in successfully!");
       setLoggedIn(true);
     } catch (err) {
-      setError(err.message);
+      setError(err.message); 
     }
   };
 
