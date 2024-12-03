@@ -108,7 +108,7 @@ function App() {
           <Route path={'/Error'} element={<Error />}/>
           <Route path={'/login'} element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>}/>          
           <Route path={'/21Things'} element={<TwentyOneThings />}/>
-          <Route path={'/account'} element={<Account user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
+          <Route path={'/account'} element={<Account auth={auth} user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
           <Route
             path="/prompts"
             element={

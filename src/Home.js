@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from "framer-motion";
 import { useState, useEffect } from 'react';
+import { MenuItem, Stack, Typography, TextField, Button, Alert, Select } from '@mui/material';
 
 import Projects from './Projects';
 import Carousel from './Carousel';
@@ -9,13 +10,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 const Home = ({setURL, setTitle, setDesc}) => {
 
     return (
-    <>
+    <Stack justifyContent={'center'} alignItems={'center'}>
         <Carousel />
-        <section className='projects'>
-            <h3>Featured Projects</h3>
+        <Stack className='projects'>
+            <Typography sx={{fontFamily: '"Bebas Neue", sans-serif', marginTop: 5}} variant='h3'>Featured Projects</Typography>
             <Projects setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>
-        </section>
-    </>
+        </Stack>
+    </Stack>
   )
 }
 

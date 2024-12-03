@@ -35,8 +35,14 @@ const userApp = initializeApp(firebaseUsers, "userApp"); // Secondary app with u
 const database = getDatabase(app); // Primary database
 const auth = getAuth(app); // Auth for the primary app
 const users = getDatabase(userApp); // Secondary database
+auth.useDeviceLanguage()
 
 setPersistence(auth, browserLocalPersistence)
-  .catch((error) => console.error("Error setting persistence:", error));
+  .then(() => {
+    console.log("Persistence set to browserLocalPersistence");
+  })
+  .catch((error) => {
+    console.error("Error setting persistence:", error.code, error.message);
+  });
 
-export { database, auth, users };
+  export { database, auth, users, app, userApp };

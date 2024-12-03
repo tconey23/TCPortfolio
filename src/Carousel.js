@@ -5,13 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { Link } from 'react-router-dom';
 import './Contact.css'
+import { MenuItem, Stack, Typography, TextField, Button, Alert, Select } from '@mui/material';
 
 const Carousel = () => {
     const settings = {
         dots: true,
         infinite: true,
         speed: 2000,
-        slidesToShow: 3,
+        slidesToShow: 7,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
@@ -19,8 +20,8 @@ const Carousel = () => {
     };
 
     return (
-    <div className='carousel'>
-        <h2>Tech Stack</h2>
+    <Stack className='carousel'>
+        <Typography variant='h5' sx={{fontFamily: '"Bebas Neue", sans-serif'}}>Tech Stack</Typography>
         <Slider style={styles.slider} {...settings}>
             <div>
                 <i style={styles.icon} className="fab fa-react"></i>
@@ -71,7 +72,7 @@ const Carousel = () => {
                 <p id='r3f'>REACT THREE FIBER</p>
             </div>
         </Slider>
-    </div>
+    </Stack>
     );
 };
 
