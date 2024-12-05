@@ -259,6 +259,7 @@ const ThingsPrompts = ({user}) => {
             <Stack color={'black'}>
                     {!calendarLoaded && <ProgressBar />}
                     <Calendar setAuthor={setAuthor} setPrompts={setPrompts} setCategory={setCategory} setCalendarLoaded={setCalendarLoaded} setSelectedDate={setDate} disabledDates={disabledDates} refreshCalendar={refreshCalendar} setRefreshCalendar={setRefreshCalendar} />
+                    <TextField label='Author' required='true' defaultValue={author} onChange={(e) => setAuthor(e.target.value)}/>
                 <Select onChange={(e) => setUploadType(e.target.value)} value={uploadType} label={uploadType}>
                     <MenuItem value={'Enter Single Prompts'}>Enter Single Prompts</MenuItem>
                     <MenuItem value={'Upload CSV'}>Upload CSV</MenuItem>
