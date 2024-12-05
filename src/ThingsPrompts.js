@@ -1,4 +1,5 @@
 import { Alert, Button, List, ListItem, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect, useState, Suspense  } from 'react'
 import { styled } from '@mui/material/styles';
 import Papa from 'papaparse';
@@ -6,6 +7,7 @@ import { database } from './firebase';
 import Calendar from './Calendar';
 import ProgressBar from './ProgressBar';
 import { ref, set, get, child } from 'firebase/database';
+import Draggable from 'react-draggable';
 
 const ThingsPrompts = ({user}) => {
 
@@ -26,9 +28,12 @@ const ThingsPrompts = ({user}) => {
     const [date, setDate] = useState()
     const [calendarLoaded, setCalendarLoaded] = useState(false)
     const [refreshCalendar, setRefreshCalendar] = useState(0)
+    const [author, setAuthor] = useState(null)
+    const [isEditing, setIsEditing] = useState()
+    const [editValue, setEditValue] = useState('')
 
     useEffect(() => {
-        // console.log(user)
+        console.log(user)
     }, [database, user])
 
     const handleSubmit = async () => {
@@ -54,6 +59,8 @@ const ThingsPrompts = ({user}) => {
             author: user, // Add the author's name or ID
             date: numericDate
           };
+
+          console.log(newCategoryData)
       
           // Create a reference to the formatted path
           const categoryRef = ref(database, fullCategoryPath);
@@ -221,26 +228,42 @@ const ThingsPrompts = ({user}) => {
         }
       }, [date])
 
+    const handleUpdate = (i, newText) => {
+      setPrompts((prevArray) => 
+        prevArray.map((item, id) => (id === i ? newText : item))
+      );
+      setIsEditing(null)
+    }
+
+    const handleEditing = (i) => {
+      setIsEditing(i)
+      setEditValue(prompts[i])
+    }
+
 
       useEffect(() => {
-        // console.log(calendarLoaded)
-      }, [calendarLoaded])
+        if(user){
+          setAuthor(user)
+        }
+      }, [user])
+      
+      useEffect(() => {
+        console.log(prompts)
+      }, [prompts])
       
 
   return (
     <Stack direction={'row'} width={'90vw'} height={'80vh'} justifyContent={'center'} alignItems={'flex-start'} padding={10}>
-        <Stack justifyContent={'center'} alignItems={'center'} sx={{background: 'white', padding: 10}} width={300} height={'65%'}>
+        <Stack justifyContent={'flex-start'} alignItems={'center'} sx={{background: 'white', padding: 5, overflowY: 'scroll', overflowX: 'hidden'}} width={300} height={'65%'}>
             {success && <Alert sx={{position: 'absolute', top: 100}}>Category added!</Alert>}
             <Stack color={'black'}>
                     {!calendarLoaded && <ProgressBar />}
-                    <Calendar setCalendarLoaded={setCalendarLoaded} setSelectedDate={setDate} disabledDates={disabledDates} refreshCalendar={refreshCalendar} setRefreshCalendar={setRefreshCalendar} />
+                    <Calendar setAuthor={setAuthor} setPrompts={setPrompts} setCategory={setCategory} setCalendarLoaded={setCalendarLoaded} setSelectedDate={setDate} disabledDates={disabledDates} refreshCalendar={refreshCalendar} setRefreshCalendar={setRefreshCalendar} />
                 <Select onChange={(e) => setUploadType(e.target.value)} value={uploadType} label={uploadType}>
                     <MenuItem value={'Enter Single Prompts'}>Enter Single Prompts</MenuItem>
                     <MenuItem value={'Upload CSV'}>Upload CSV</MenuItem>
                 </Select>
             </Stack>
-                {/* <TextField required='true' spellCheck={true} onBlur={(e) => setCategory(e.target.value)} sx={{color: 'white', padding: 2}} placeholder='Category Title' value={category}/> */}
-                <TextField label='Author' required='true' defaultValue={user}/>
             {uploadType === 'Enter Single Prompts' ?
             <>
                 <TextField spellCheck={true} value={promptText} onChange={(e) => setPromptText(e.target.value)} sx={{color: 'white', padding: 2}} placeholder='Prompt'/>
@@ -256,6 +279,7 @@ const ThingsPrompts = ({user}) => {
                     component="label"
                     role={undefined}
                     variant="contained"
+                    sx={{margin: '10px'}}
                 >
                     <i style={{marginRight: '10px'}} className="fi fi-sr-folder-upload"></i>
                     Select File 
@@ -274,24 +298,33 @@ const ThingsPrompts = ({user}) => {
             <Stack>
             </Stack>
         </Stack>
-        <Stack sx={{height: '100%', marginLeft: 10}} key={prompts}>
-        <Typography variant="h4" component="h4">
-            {category && category}
-        </Typography>
+        <Stack className='list-stack' sx={{height: '80%', marginLeft: 10, paddingBottom: 5, paddingRight: 5, boxShadow: 'inset 1px 1px 1px 1px black', width: '50vw'}} key={prompts}>
+          <Typography variant="h4" component="h4">
+              {category && category}
+          </Typography>
            {prompts.length > 0 && 
-           <List sx={{height: '100%', overflowY: 'scroll', width: '100%'}}> 
-                {prompts.map((p, i) => (
-                    <Stack direction={'row'}>
-                        <ListItem color={'white'}>{p}</ListItem>
-                        <Button onClick={() => handleRemove(p)}><i class="fi fi-tr-trash-xmark"></i></Button>
+           <List sx={{height: '80%', overflowY: 'scroll', width: '40vw', padding: 5}}> 
+              {prompts.map((p, i) => (
+               
+                  <Stack direction={'row'}>
+                        {isEditing === i ? 
+                        <Stack width={'100%'}>
+                          <TextField onChange={(e) => setEditValue(e.target.value)} value={editValue}></TextField>
+                          <Button sx={{color: 'green', border: '1px white solid'}} onClick={(e) => handleUpdate(i, editValue)}><i class="fi fi-sr-check-circle"></i></Button>
+                        </Stack>
+                        :
+                        <ListItem color={'white'}>{p}</ListItem>}
+                        {!isEditing && <Button sx={{color: 'orange', border: '1px white solid'}} onClick={() => handleEditing(i)}><i class="fi fi-sr-pencil"></i></Button>}
+                        <Button sx={{color: 'red', border: '1px white solid'}} onClick={() => handleRemove(p)}><i class="fi fi-tr-trash-xmark"></i></Button>
                     </Stack>
-                ))}
-            </List>} 
+              
+              ))}
+          </List>} 
             <Stack justifyContent={'center'} alignItems={'center'} width={'100%'}>
-                    <Button onClick={()=>handleSubmit()} disabled={!category || !prompts.length > 0} variant='contained'>
-                        SUBMIT
-                    </Button>
-                </Stack>
+              <Button onClick={()=>handleSubmit()} disabled={!category || !prompts.length > 0} variant='contained'>
+                  SUBMIT
+              </Button>
+            </Stack>
         </Stack>
     </Stack>
   )

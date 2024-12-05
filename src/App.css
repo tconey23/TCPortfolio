@@ -1,5 +1,40 @@
 @import "~@flaticon/flaticon-uicons/css/all/all";
 
+.css-1b86cyw-MuiList-root{
+  box-shadow:inset 1px 1px 1px 1px rgb(51, 51, 51);
+  padding: 10px;
+}
+
+.draggable-item {
+  user-select: none; /* Modern browsers */
+  -webkit-user-drag: none; /* Prevent dragging on Safari */
+  -webkit-touch-callout: none; /* Disable long-press callout on mobile */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.css-cfd5wn-MuiListItem-root{
+  &:hover{
+    font-size: large;
+  }
+}
+
+.fi-br-refresh{
+  cursor: pointer;
+  align-self: center;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: all .25s ease-in-out;
+}
+
+.fi-br-refresh:hover{
+      scale: 1.2;
+      color: green;
+      transform: rotateZ(45deg);
+      transition: all .5s ease-in-out;
+}
+
 .css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root.Mui-disabled{
     pointer-events: inherit !important;
     cursor: not-allowed

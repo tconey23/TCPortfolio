@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { auth } from './firebase';
+import { auth, currentUser } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
@@ -36,9 +36,11 @@ function App() {
       };
   };
 
+
+
   useEffect(() => {
-    console.log(user) 
-  }, [user])
+    console.log(currentUser)
+  }, [currentUser])
 
   const ProtectedRoute = ({ loggedIn, children }) => {
     const location = useLocation();
@@ -55,13 +57,13 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true)
-        // Update state or context with user info
+        setUser(user.displayName)
       } else {
         setLoggedIn(false)
       }
     });
 
-    return () => unsubscribe(); // Cleanup listener on unmount
+    return () => unsubscribe();
   }, [auth]);
 
   const handleCloseMenu = () => {

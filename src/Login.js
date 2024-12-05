@@ -91,8 +91,12 @@ const AuthModal = ({ loggedIn, setLoggedIn, setUser }) => {
         
       }
     };
+
+    let currentUser = auth.currentUser
   
-    fetchData();
+    if(currentUser){
+        console.log(currentUser)
+    }
   }, []);
 
   return (

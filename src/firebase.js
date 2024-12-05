@@ -37,12 +37,16 @@ const auth = getAuth(app); // Auth for the primary app
 const users = getDatabase(userApp); // Secondary database
 auth.useDeviceLanguage()
 
+let currentUser
+
 setPersistence(auth, browserLocalPersistence)
   .then(() => {
-    console.log("Persistence set to browserLocalPersistence");
+    currentUser = auth.currentUser
   })
   .catch((error) => {
     console.error("Error setting persistence:", error.code, error.message);
   });
 
-  export { database, auth, users, app, userApp };
+  console.log(auth.currentUser)
+
+  export { database, auth, users, app, userApp, currentUser };
