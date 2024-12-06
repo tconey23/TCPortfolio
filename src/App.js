@@ -18,11 +18,12 @@ import ThingsPrompts from './ThingsPrompts';
 import Login from './Login'
 import Error from './Error';
 import Account from './Account';
+import { addUser } from './apiCalls';
 
 function App() {
 
   const [isOn, setIsOn] = useState(false);
-  const toggleSwitch = () => setIsOn(!isOn);
+  const toggleSwitch = () => setIsOn(!isOn); 
   const [projURL, setURL] = useState()
   const [projTitle, setTitle] = useState()
   const [projDesc, setDesc] = useState()
@@ -39,8 +40,8 @@ function App() {
 
 
   useEffect(() => {
-    console.log(currentUser)
-  }, [currentUser])
+    
+  }, [])
 
   const ProtectedRoute = ({ loggedIn, children }) => {
     const location = useLocation();
@@ -57,6 +58,7 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true)
+        console.log(user)
         setUser(user.displayName)
       } else {
         setLoggedIn(false)
