@@ -1,4 +1,4 @@
-import { Alert, Button, List, ListItem, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import { Alert, Button, List, ListItem, MenuItem, Select, Stack, TextField, Typography, FormLabel } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect, useState, Suspense  } from 'react'
 import { styled } from '@mui/material/styles';
@@ -56,7 +56,7 @@ const ThingsPrompts = ({user}) => {
           // Prepare the data with prompts and author
           const newCategoryData = {
             prompts: [...prompts], // Array of prompts
-            author: user, // Add the author's name or ID
+            author: author, // Add the author's name or ID
             date: numericDate
           };
 
@@ -256,10 +256,11 @@ const ThingsPrompts = ({user}) => {
     <Stack direction={'row'} width={'90vw'} height={'80vh'} justifyContent={'center'} alignItems={'flex-start'} padding={10}>
         <Stack justifyContent={'flex-start'} alignItems={'center'} sx={{background: 'white', padding: 5, overflowY: 'scroll', overflowX: 'hidden'}} width={300} height={'65%'}>
             {success && <Alert sx={{position: 'absolute', top: 100}}>Category added!</Alert>}
-            <Stack color={'black'}>
+            <Stack color={'white'}>
                     {!calendarLoaded && <ProgressBar />}
                     <Calendar setAuthor={setAuthor} setPrompts={setPrompts} setCategory={setCategory} setCalendarLoaded={setCalendarLoaded} setSelectedDate={setDate} disabledDates={disabledDates} refreshCalendar={refreshCalendar} setRefreshCalendar={setRefreshCalendar} />
-                    <TextField label='Author' required='true' defaultValue={author} onChange={(e) => setAuthor(e.target.value)}/>
+                    <FormLabel id="user-type-label">Author</FormLabel>
+                    <TextField required='true' value={author} onChange={(e) => setAuthor(e.target.value)}/>
                 <Select onChange={(e) => setUploadType(e.target.value)} value={uploadType} label={uploadType}>
                     <MenuItem value={'Enter Single Prompts'}>Enter Single Prompts</MenuItem>
                     <MenuItem value={'Upload CSV'}>Upload CSV</MenuItem>
