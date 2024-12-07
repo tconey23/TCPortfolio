@@ -301,7 +301,7 @@ const ThingsPrompts = ({user}) => {
             </Stack>
         </Stack>
         <Stack className='list-stack' sx={{height: '80%', marginLeft: 10, paddingBottom: 5, paddingRight: 5, boxShadow: 'inset 1px 1px 1px 1px black', width: '50vw'}} key={prompts}>
-          <Typography variant="h4" component="h4">
+          <Typography sx={{color: 'white'}} variant="h4" component="h4">
               {category && category}
           </Typography>
            {prompts.length > 0 && 
@@ -311,11 +311,11 @@ const ThingsPrompts = ({user}) => {
                   <Stack direction={'row'}>
                         {isEditing === i ? 
                         <Stack width={'100%'}>
-                          <TextField onChange={(e) => setEditValue(e.target.value)} value={editValue}></TextField>
+                          <TextField sx={{color: 'white'}} onChange={(e) => setEditValue(e.target.value)} value={editValue}></TextField>
                           <Button sx={{color: 'green', border: '1px white solid'}} onClick={(e) => handleUpdate(i, editValue)}><i class="fi fi-sr-check-circle"></i></Button>
                         </Stack>
                         :
-                        <ListItem color={'white'}>{p}</ListItem>}
+                        <ListItem sx={{color: 'white'}} color={'white'}>{p}</ListItem>}
                         {!isEditing && <Button sx={{color: 'orange', border: '1px white solid'}} onClick={() => handleEditing(i)}><i class="fi fi-sr-pencil"></i></Button>}
                         <Button sx={{color: 'red', border: '1px white solid'}} onClick={() => handleRemove(p)}><i class="fi fi-tr-trash-xmark"></i></Button>
                     </Stack>
