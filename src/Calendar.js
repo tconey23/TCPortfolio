@@ -37,7 +37,7 @@ const Calendar = ({ disabledDates, setSelectedDate, setCalendarLoaded, refreshCa
   const [date, setDate] = useState(new Date().toLocaleDateString());
 
   const getSelectedDate = async (date) => {
-    const res = await fetch(`http://localhost:5001/api/prompts/${date}`);
+    const res = await fetch(`https://secure-beach-74758-ab0619edd0f3.herokuapp.com/api/prompts/${date}`);
     const data = await res.json()
     if(data) {
       setAuthor(data.author)
