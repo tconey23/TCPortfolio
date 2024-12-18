@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EmailConfirmation from './EmailConfirmation';
 import emailjs from 'emailjs-com';
 import './TwentyOneThings.css';
@@ -9,9 +9,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Link } from 'react-router-dom';
+import { addTester } from './apiCalls';
 
 const TwentyOneThings = () => {
   const [success, setSuccess] = useState(false)
+  const [pubLink, setPublink] = useState('https://testflight.apple.com/join/HADecKXT')
   const [fieldState, setFieldState] = useState({
     name: false,
     email: false,
@@ -22,7 +24,18 @@ const TwentyOneThings = () => {
     name: '',
     email: '',
     os: 'iOS',
+    message: `${pubLink}`
   });
+  
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      message: formData.os === 'iOS'
+        ? 'https://testflight.apple.com/join/HADecKXT'
+        : 'https://play.google.com/apps/testing/com.tconey23.connect21Mobile'
+    }));
+  }, [formData.os]);
+
 
   const validateField = (name, value) => {
     switch (name) {
@@ -37,10 +50,12 @@ const TwentyOneThings = () => {
 
   const handleChange = (e) => {
     const { name, value} = e.target;
+    const { email, emailAdd} = e.target;
 
     setFormData({
       ...formData,
       [name]: value,
+      [email]: emailAdd
     });
 
     setFieldState((prevState) => ({
@@ -58,20 +73,34 @@ const TwentyOneThings = () => {
     }
   
     try {
-      const result = await emailjs.send(
-        'service_sj8p1yb',
-        'template_j79vman',
-        formData,
-        'iEa1QtTEPPBHKUYfL'
+      // Ensure message is correctly set
+      const emailData = {
+        name: formData.name,
+        email: formData.email,
+        os: formData.os,
+        message: formData.message // Ensure it matches the template's placeholder
+      };
+  
+      console.log(emailData);
+  
+      const response = await emailjs.send(
+        'service_sj8p1yb',    // Service ID
+        'template_v84kp7q',   // Template ID
+        emailData,
+        'iEa1QtTEPPBHKUYfL'   // Public Key
       );
 
-      setSuccess(true);
+      if(formData.os === 'Android'){
+        addTester(emailData.email)
+      }
   
+      setSuccess(true);
     } catch (error) {
       console.error("Error sending email:", error);
       setSuccess(false);
     }
   };
+  
 
   return (
     <Stack
@@ -114,7 +143,7 @@ const TwentyOneThings = () => {
           <TextField
             type="email"
             name="email"
-            value={formData.email}
+            value={formData.to_email}
             onChange={handleChange}
             sx={{ backgroundColor: 'white', marginBottom: 5}}
             variant="filled"
