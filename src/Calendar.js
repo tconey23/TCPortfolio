@@ -101,6 +101,7 @@ const Calendar = ({ disabledDates, setSelectedDate, setCalendarLoaded, refreshCa
         views={['day']}
         referenceDate={dayjs(date)}
         onChange={(newValue) => handleDateSelect(newValue)}
+        sx={{color: 'black'}}
         slotProps={{
           day: (dayProps) => {
             const isSpecialDate = disabledDates?.some((disabledDate) =>
