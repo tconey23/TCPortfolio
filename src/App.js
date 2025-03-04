@@ -19,6 +19,7 @@ import Login from './Login'
 import Error from './Error';
 import Account from './Account';
 import { addUser } from './apiCalls';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
 
@@ -125,6 +126,7 @@ function App() {
         </Routes>
       </ErrorBoundary>
       </main>
+      <Analytics/>
     </div>
   );
 }

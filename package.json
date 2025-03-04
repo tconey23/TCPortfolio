@@ -16,6 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@toolpad/core": "^0.10.0",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.7.8",
     "dayjs": "^1.11.13",
     "emailjs-com": "^3.2.0",
