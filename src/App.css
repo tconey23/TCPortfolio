@@ -1,5 +1,19 @@
 @import "~@flaticon/flaticon-uicons/css/all/all";
 
+
+.switch{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 4px 4px 0px #00000030;
+    scale: 1.1;
+  }
+}
+
+
 .css-1b86cyw-MuiList-root{
   box-shadow:inset 1px 1px 1px 1px rgb(51, 51, 51);
   padding: 10px;

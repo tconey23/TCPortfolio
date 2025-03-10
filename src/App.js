@@ -7,7 +7,7 @@ import LandingPage from './LandingPage';
 import Home from './Home';
 import Contact from './Contact';
 import React, {useState, useRef, useEffect} from 'react';
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ErrorBoundary } from 'react-error-boundary'
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
@@ -30,6 +30,7 @@ function App() {
   const [projDesc, setDesc] = useState()
   const [loggedIn, setLoggedIn] = useState()
   const [user, setUser] = useState()
+  const nav = useNavigate()
 
   const getHandleStyle = () => {
       return {
@@ -40,20 +41,23 @@ function App() {
 
 
 
-  useEffect(() => {
-    
-  }, [])
-
-  const ProtectedRoute = ({ loggedIn, children }) => {
-    const location = useLocation();
   
+  const location = useLocation();
+  
+  const ProtectedRoute = ({ loggedIn, children }) => {
     if (!loggedIn) {
       // Redirect to login and pass the requested path in state
       return <Navigate to="/login" state={{ from: location }} />;
     }
-  
+    
     return children;
   };
+
+  useEffect(() => {
+    if(location && location.pathname === '/'){
+      nav('/Landing')
+    }
+  }, [location])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -106,7 +110,7 @@ function App() {
         FallbackComponent={() => <h1>Something went wrong!</h1>}
       >
         <Routes>
-          <Route path={'/'} element={<LandingPage />}/>
+          <Route path={'/Landing'} element={<LandingPage />}/>
           <Route path={'/Home'} element={<Home setURL={setURL} setTitle={setTitle} setDesc={setDesc}/>}/>
           <Route path={'/Contact'} element={<Contact />}/>
           <Route path={'/ViewProject'} element={<ProjectDisplay title={projTitle} desc={projDesc} url={projURL}/>}/>

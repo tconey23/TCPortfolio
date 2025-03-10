@@ -129,7 +129,7 @@ const LandingPage = () => {
         coneyWidth = coney.current.offsetWidth / 2 
         frontendWidth = frontend.current.offsetWidth / 2 
         engineerWidth = engineer.current.offsetWidth / 2 
-        switchWidth = enterSwitch.current.offsetWidth / 2
+        // switchWidth = enterSwitch.current.offsetWidth / 2
 
         tomHeight = tom.current.offsetHeight / 2 + 10
         coneyHeight = coney.current.offsetHeight / 2 + 10
@@ -344,29 +344,40 @@ const LandingPage = () => {
     <div id='landingSplash' style={styles.splash}>
      <div>
 { initialState && showSwitch && 
-    <motion.div 
-     className="switch"
-     ref={enterSwitch}
-     initial={initialState[4][0]}
-     animate={initialState[4][1]}
-     transition={fade}
-     data-ison={isOn}>
-      <motion.div
-        onPointerOver={() => setIsHover(true)}
-        onPointerOut={() => setIsHover(false)}
-        className="handle"
-        style={handleStyle}
-        drag="x"
-        dragConstraints={{ left: 0, right: 100 }}
-        dragElastic={0}
-        onDrag={handleDrag}
-        onDragEnd={handleDragEnd}
-        animate={{ x: isOn ? 60 : 0 }} // Ensure this uses only two keyframes
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      />
-      <br/>
-      <p style={styles.text}>Slide to enter</p>
-    </motion.div>}
+    // <motion.div 
+    //  className="switch"
+    //  ref={enterSwitch}
+    //  initial={initialState[4][0]}
+    //  animate={initialState[4][1]}
+    //  transition={fade}
+    //  data-ison={isOn}>
+    //   <motion.div
+    //     onPointerOver={() => setIsHover(true)}
+    //     onPointerOut={() => setIsHover(false)}
+    //     className="handle"
+    //     style={handleStyle}
+    //     drag="x"
+    //     dragConstraints={{ left: 0, right: 100 }}
+    //     dragElastic={0}
+    //     onDrag={handleDrag}
+    //     onDragEnd={handleDragEnd}
+    //     animate={{ x: isOn ? 60 : 0 }}
+    //     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    //   />
+    //   <br/>
+    //   <p style={styles.text}>Slide to enter</p>
+    // </motion.div>
+    <motion.div
+      className="switch"
+      ref={enterSwitch}
+      initial={initialState[4][0]}
+      animate={initialState[4][1]}
+      transition={fade}
+      onClick={() => setIsOn(!isOn)}
+    >
+      <p style={{width: '100%'}}>Enter</p>
+    </motion.div>
+    }
      </div>
      <div id='fullWindow' 
       style={{
